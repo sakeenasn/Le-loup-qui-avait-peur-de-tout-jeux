@@ -39,6 +39,7 @@
       background: linear-gradient(180deg, #fffaf4 0%, #fff4e8 100%);
       color: var(--text);
       line-height: 1.6;
+      overflow-x:hidden;
     }
 
     a{
@@ -177,6 +178,16 @@
 
     .btn-secondary:hover{
       background:var(--bg-soft);
+    }
+
+    .btn-soft{
+      background:#fff7ea;
+      color:#7a5a44;
+      border:2px solid #f1dcc8;
+    }
+
+    .btn-soft:hover{
+      background:#fff0dc;
     }
 
     .hero-card{
@@ -471,6 +482,7 @@
       cursor:pointer;
       transition:0.2s;
       box-shadow:var(--shadow);
+      min-height:88px;
     }
 
     .game-btn:hover,
@@ -550,7 +562,7 @@
 
     .answer-btn:disabled{
       cursor:default;
-      opacity:0.95;
+      opacity:0.96;
     }
 
     .answer-btn.correct{
@@ -582,6 +594,20 @@
       flex-wrap:wrap;
       gap:12px;
       margin-top:18px;
+    }
+
+    .stars-box{
+      margin-top:18px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex-wrap:wrap;
+      min-height:34px;
+    }
+
+    .star{
+      font-size:1.5rem;
+      animation:popStar 0.4s ease;
     }
 
     .progress-card{
@@ -616,6 +642,27 @@
     .progress-note{
       font-size:0.95rem;
       color:#6f5b4e;
+    }
+
+    .end-card{
+      text-align:center;
+      background:linear-gradient(135deg, #fff9ef, #ffffff);
+      border:2px dashed #f0b27a;
+    }
+
+    .end-title{
+      font-size:2rem;
+      color:#5e3d2c;
+      margin-bottom:12px;
+    }
+
+    .end-stars{
+      font-size:2rem;
+      margin:12px 0;
+    }
+
+    .hidden{
+      display:none !important;
     }
 
     footer{
@@ -655,6 +702,11 @@
     @keyframes floatCloud{
       0%,100%{ transform:translateY(0px); }
       50%{ transform:translateY(-6px); }
+    }
+
+    @keyframes popStar{
+      0%{ transform:scale(0.3); opacity:0; }
+      100%{ transform:scale(1); opacity:1; }
     }
 
     @media (max-width:1000px){
@@ -710,6 +762,7 @@
       <a href="#emotions">Émotions</a>
       <a href="#jeux">Mini-jeux</a>
       <a href="#progression">Progression</a>
+      <a href="#fin">Fin</a>
     </nav>
   </div>
 </header>
@@ -732,7 +785,7 @@
         </div>
 
         <div class="buttons">
-          <a href="#jeux" class="btn btn-primary">Commencer les jeux</a>
+          <button class="btn btn-primary" onclick="openStartScreen()">Commencer l’aventure</button>
           <a href="#emotions" class="btn btn-secondary">Voir les émotions</a>
         </div>
       </div>
@@ -898,9 +951,12 @@
 
         <div class="result" id="resultText"></div>
 
+        <div class="stars-box" id="starsBox"></div>
+
         <div class="controls">
           <button class="btn btn-secondary" onclick="nextQuestion()">Question suivante</button>
           <button class="btn btn-primary" onclick="resetCurrentGame()">Recommencer ce jeu</button>
+          <button class="btn btn-soft" onclick="goToEnd()">Voir la fin</button>
         </div>
       </div>
     </div>
@@ -927,6 +983,22 @@
         <p class="progress-note">
           Plus tu réponds aux questions, plus ta barre de progression avance.
         </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="fin">
+    <div class="container">
+      <div class="card end-card fade-in">
+        <div class="end-title">Fin du parcours</div>
+        <p id="endMessage">
+          Tu peux terminer les mini-jeux pour voir ton résultat final.
+        </p>
+        <div class="end-stars" id="endStars">⭐</div>
+        <div class="buttons" style="justify-content:center; margin-top:18px;">
+          <a href="#jeux" class="btn btn-primary">Retour aux jeux</a>
+          <button class="btn btn-secondary" onclick="restartAll()">Recommencer tout</button>
+        </div>
       </div>
     </div>
   </section>
@@ -1085,6 +1157,11 @@
   let score = 0;
   let questionLocked = false;
   let answeredTracker = {};
+  let correctTracker = {};
+
+  function openStartScreen() {
+    document.getElementById("jeux").scrollIntoView({ behavior: "smooth" });
+  }
 
   function updateProgress() {
     document.getElementById("scoreValue").textContent = score;
@@ -1094,6 +1171,8 @@
     const totalPossibleQuestions = 12;
     const percent = Math.min((totalAnswered / totalPossibleQuestions) * 100, 100);
     document.getElementById("progressFill").style.width = percent + "%";
+
+    updateEndScreen();
   }
 
   function setActiveGameButton(button) {
@@ -1123,6 +1202,7 @@
     container.innerHTML = "";
     document.getElementById("resultText").textContent = "";
     document.getElementById("resultText").className = "result";
+    document.getElementById("starsBox").innerHTML = "";
     questionLocked = false;
 
     question.answers.forEach((answer, index) => {
@@ -1134,6 +1214,17 @@
     });
   }
 
+  function showStars(count) {
+    const starsBox = document.getElementById("starsBox");
+    starsBox.innerHTML = "";
+    for (let i = 0; i < count; i++) {
+      const star = document.createElement("span");
+      star.className = "star";
+      star.textContent = "⭐";
+      starsBox.appendChild(star);
+    }
+  }
+
   function handleAnswer(selectedIndex) {
     if (questionLocked || !currentGameKey) return;
 
@@ -1142,7 +1233,8 @@
     const answers = question.answers;
     const buttons = document.querySelectorAll(".answer-btn");
     const result = document.getElementById("resultText");
-    const trackerKey = currentGameKey + "-" + currentQuestionIndex;
+    const answeredKey = currentGameKey + "-" + currentQuestionIndex;
+    const correctKey = currentGameKey + "-" + currentQuestionIndex + "-correct";
 
     questionLocked = true;
 
@@ -1152,19 +1244,24 @@
       if (index === selectedIndex && !answers[index].correct) btn.classList.add("wrong");
     });
 
-    if (!answeredTracker[trackerKey]) {
+    if (!answeredTracker[answeredKey]) {
       totalAnswered++;
-      answeredTracker[trackerKey] = true;
+      answeredTracker[answeredKey] = true;
     }
 
     if (answers[selectedIndex].correct) {
-      totalCorrect++;
-      score++;
+      if (!correctTracker[correctKey]) {
+        totalCorrect++;
+        score++;
+        correctTracker[correctKey] = true;
+      }
       result.textContent = "✅ " + answers[selectedIndex].explanation;
       result.className = "result success";
+      showStars(3);
     } else {
       result.textContent = "❌ " + answers[selectedIndex].explanation;
       result.className = "result error";
+      showStars(1);
     }
 
     updateProgress();
@@ -1187,6 +1284,58 @@
     if (!currentGameKey) return;
     currentQuestionIndex = 0;
     renderQuestion();
+  }
+
+  function updateEndScreen() {
+    const endMessage = document.getElementById("endMessage");
+    const endStars = document.getElementById("endStars");
+
+    if (totalAnswered === 0) {
+      endMessage.textContent = "Tu peux terminer les mini-jeux pour voir ton résultat final.";
+      endStars.textContent = "⭐";
+      return;
+    }
+
+    const totalPossibleQuestions = 12;
+    const ratio = totalCorrect / totalPossibleQuestions;
+
+    if (ratio >= 0.8) {
+      endMessage.textContent = "Bravo ! Tu connais très bien les émotions et tu progresses avec confiance.";
+      endStars.textContent = "⭐ ⭐ ⭐";
+    } else if (ratio >= 0.5) {
+      endMessage.textContent = "C’est très bien ! Tu avances bien. Continue encore un peu pour améliorer ton score.";
+      endStars.textContent = "⭐ ⭐";
+    } else {
+      endMessage.textContent = "Tu as déjà commencé, c’est super. Continue les jeux pour progresser encore.";
+      endStars.textContent = "⭐";
+    }
+  }
+
+  function goToEnd() {
+    document.getElementById("fin").scrollIntoView({ behavior: "smooth" });
+  }
+
+  function restartAll() {
+    currentGameKey = null;
+    currentQuestionIndex = 0;
+    totalAnswered = 0;
+    totalCorrect = 0;
+    score = 0;
+    questionLocked = false;
+    answeredTracker = {};
+    correctTracker = {};
+
+    document.querySelectorAll(".game-btn").forEach(btn => btn.classList.remove("active"));
+    document.getElementById("gameTitle").textContent = "Choisis un mini-jeu";
+    document.getElementById("gameDesc").textContent = "Clique sur l’un des jeux pour commencer.";
+    document.getElementById("sceneAvatar").textContent = "🐺";
+    document.getElementById("questionText").textContent = "Les questions apparaîtront ici.";
+    document.getElementById("answersContainer").innerHTML = "";
+    document.getElementById("resultText").textContent = "";
+    document.getElementById("starsBox").innerHTML = "";
+
+    updateProgress();
+    document.getElementById("accueil").scrollIntoView({ behavior: "smooth" });
   }
 
   const observer = new IntersectionObserver((entries) => {
