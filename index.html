@@ -3,998 +3,698 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Émotions & Moi – Apprendre avec le loup</title>
-
+  <title>Émotions & Moi - Accueil</title>
+  <meta name="description" content="Projet interactif jeunesse autour du loup, des émotions et de la confiance en soi." />
   <style>
-    * {
+    :root{
+      --bg: #fffaf4;
+      --bg-soft: #fff2df;
+      --card: #ffffff;
+      --text: #3b2f2f;
+      --accent: #f08a5d;
+      --accent-dark: #d96c3f;
+      --accent-2: #ffd166;
+      --green: #7cb518;
+      --blue: #7cc6fe;
+      --pink: #f7b2d0;
+      --purple: #d8c4f2;
+      --shadow: 0 10px 25px rgba(0,0,0,0.08);
+      --radius: 22px;
+    }
+
+    *{
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    :root {
-      --bg: #fff8ef;
-      --cream: #fffdf8;
-      --brown: #5c3d2e;
-      --text: #4b4b4b;
-      --pink: #f9c5d5;
-      --rose: #f582ae;
-      --blue: #8bd3dd;
-      --yellow: #ffe08a;
-      --green: #cdeac0;
-      --purple: #d9c2f0;
-      --red: #ffb3b3;
-      --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-      --radius: 22px;
+    html{
+      scroll-behavior: smooth;
     }
 
-    body {
-      font-family: "Trebuchet MS", Arial, sans-serif;
-      background: linear-gradient(180deg, #fffaf3 0%, #fef6e4 100%);
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #fffaf4 0%, #fff4e8 100%);
       color: var(--text);
-      line-height: 1.5;
-      overflow-x: hidden;
+      line-height: 1.6;
     }
 
-    header {
-      background: linear-gradient(135deg, #ffd8c2, #ffe7cf);
-      text-align: center;
-      padding: 22px 16px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    a{
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header{
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 1000;
+      background: rgba(255,250,244,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
-    header h1 {
-      color: var(--brown);
-      font-size: 2rem;
-      margin-bottom: 6px;
-    }
-
-    header p {
-      color: #7a5b4d;
-      font-size: 1rem;
-    }
-
-    main {
-      max-width: 1100px;
-      margin: 28px auto;
-      padding: 18px;
-    }
-
-    .screen {
-      display: none;
-      background: rgba(255, 255, 255, 0.96);
-      border-radius: var(--radius);
-      padding: 24px;
-      box-shadow: var(--shadow);
-      margin-bottom: 18px;
-      animation: fadeIn 0.4s ease;
-    }
-
-    .screen.active {
-      display: block;
-    }
-
-    .center {
-      text-align: center;
-    }
-
-    h2 {
-      color: var(--brown);
-      margin-bottom: 14px;
-      font-size: 1.8rem;
-    }
-
-    h3 {
-      color: var(--brown);
-    }
-
-    p {
-      margin-bottom: 12px;
-    }
-
-    button {
-      border: none;
-      cursor: pointer;
-      border-radius: 14px;
-      padding: 12px 18px;
-      font-size: 1rem;
-      font-weight: bold;
-      transition: 0.2s ease;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--blue), #6ec5d1);
-      color: #1f2a2c;
-      box-shadow: 0 8px 18px rgba(139, 211, 221, 0.35);
-    }
-
-    .btn-secondary {
-      background: linear-gradient(135deg, var(--rose), #ea6ea0);
-      color: white;
-      box-shadow: 0 8px 18px rgba(245, 130, 174, 0.28);
-    }
-
-    .btn-soft {
-      background: linear-gradient(135deg, #ffe7a3, #ffd875);
-      color: #594200;
-      box-shadow: 0 8px 18px rgba(255, 224, 138, 0.35);
-    }
-
-    .hero {
-      position: relative;
-      min-height: 420px;
-      overflow: hidden;
-      border-radius: 26px;
-      background: linear-gradient(180deg, #dff6ff 0%, #effcff 40%, #fff5dd 100%);
-      padding: 26px 20px 40px;
-    }
-
-    .sun {
-      position: absolute;
-      top: 18px;
-      right: 28px;
-      font-size: 3.2rem;
-      animation: pulse 3s ease-in-out infinite;
-    }
-
-    .cloud {
-      position: absolute;
-      font-size: 2.4rem;
-      opacity: 0.9;
-      animation: cloudMove 18s linear infinite;
-    }
-
-    .cloud1 { top: 30px; left: -60px; animation-delay: 0s; }
-    .cloud2 { top: 88px; left: -140px; animation-delay: 6s; }
-    .cloud3 { top: 145px; left: -90px; animation-delay: 10s; }
-
-    .wolf-zone {
-      position: relative;
-      z-index: 2;
-      margin-top: 24px;
-    }
-
-    .wolf-main {
-      font-size: 6.6rem;
-      animation: bounce 2.4s ease-in-out infinite;
-      filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.12));
-      margin-bottom: 8px;
-    }
-
-    .mini-stars {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 10px;
-      font-size: 1.2rem;
-      animation: sparkle 2.5s ease-in-out infinite;
-    }
-
-    .hero-text {
-      position: relative;
-      z-index: 2;
-      max-width: 760px;
+    .container{
+      width: min(1120px, 92%);
       margin: 0 auto;
     }
 
-    .ground {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 105px;
-      background: linear-gradient(180deg, #d6f2c7, #a4dc97);
-      border-top-left-radius: 40px;
-      border-top-right-radius: 40px;
-    }
-
-    .flowers {
-      position: absolute;
-      bottom: 18px;
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
-      font-size: 1.5rem;
-      z-index: 3;
-      animation: sway 3s ease-in-out infinite;
-    }
-
-    .top-bar {
+    .nav{
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      background: linear-gradient(180deg, #fff, #faf8f5);
-      border-radius: 16px;
-      padding: 14px 16px;
-      margin-bottom: 20px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+      padding: 16px 0;
+      gap: 20px;
     }
 
-    .score-box {
+    .logo{
+      font-size: 1.1rem;
       font-weight: bold;
-      color: var(--brown);
-      font-size: 1.05rem;
+      color: var(--accent-dark);
     }
 
-    .cards {
+    .nav-links{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a{
+      padding: 8px 12px;
+      border-radius: 999px;
+      transition: 0.25s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active{
+      background: var(--bg-soft);
+      color: var(--accent-dark);
+    }
+
+    .hero{
+      padding: 60px 0 40px;
+    }
+
+    .hero-content{
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 18px;
-      margin-top: 20px;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 35px;
+      align-items: center;
     }
 
-    .card {
-      background: linear-gradient(180deg, #fffdf9, #fff7ef);
-      border: 2px solid #f3e5d9;
-      border-radius: 20px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.04);
-      transition: 0.25s ease;
+    .hero-text h1{
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1.1;
+      margin-bottom: 18px;
+      color: #553939;
+    }
+
+    .hero-text p{
+      font-size: 1.05rem;
+      margin-bottom: 20px;
+      max-width: 650px;
+    }
+
+    .badges{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .badge{
+      background: #fff;
+      border: 2px solid #f7d7b8;
+      color: #7a5a44;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      box-shadow: var(--shadow);
+    }
+
+    .buttons{
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .btn{
+      display: inline-block;
+      padding: 13px 22px;
+      border-radius: 14px;
+      font-weight: bold;
+      transition: transform 0.2s ease, background 0.2s ease;
+      cursor: pointer;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .btn-primary{
+      background: var(--accent);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary:hover{
+      background: var(--accent-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary{
+      background: white;
+      color: var(--accent-dark);
+      border: 2px solid #f7d7b8;
+    }
+
+    .btn-secondary:hover{
+      transform: translateY(-2px);
+      background: var(--bg-soft);
+    }
+
+    .hero-card{
+      background: white;
+      padding: 24px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
       position: relative;
       overflow: hidden;
     }
 
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: var(--blue);
+    .hero-illustration{
+      background: linear-gradient(135deg, #fff0dc, #ffe4b8);
+      border-radius: 20px;
+      min-height: 390px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    .card::after {
+    .sun{
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      width: 80px;
+      height: 80px;
+      background: #ffd166;
+      border-radius: 50%;
+      box-shadow: 0 0 0 14px rgba(255, 209, 102, 0.2);
+    }
+
+    .cloud{
+      position: absolute;
+      background: #fff;
+      border-radius: 999px;
+      opacity: 0.95;
+    }
+
+    .cloud.one{
+      width: 100px;
+      height: 42px;
+      top: 65px;
+      left: 35px;
+    }
+
+    .cloud.two{
+      width: 80px;
+      height: 36px;
+      top: 120px;
+      left: 110px;
+    }
+
+    .forest{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 120px;
+      background: linear-gradient(180deg, #93c47d 0%, #6aa84f 100%);
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+    }
+
+    .wolf{
+      position: relative;
+      width: 180px;
+      height: 220px;
+      z-index: 2;
+      animation: floatWolf 2.6s ease-in-out infinite;
+    }
+
+    @keyframes floatWolf {
+      0%,100%{ transform: translateY(0px); }
+      50%{ transform: translateY(-8px); }
+    }
+
+    .wolf-head{
+      width: 130px;
+      height: 120px;
+      background: #8f8f95;
+      border-radius: 35% 35% 42% 42%;
+      margin: 0 auto;
+      position: relative;
+      top: 10px;
+    }
+
+    .ear{
+      position: absolute;
+      width: 38px;
+      height: 48px;
+      background: #76767c;
+      top: -18px;
+      border-radius: 40% 40% 10% 10%;
+    }
+
+    .ear.left{ left: 12px; transform: rotate(-16deg); }
+    .ear.right{ right: 12px; transform: rotate(16deg); }
+
+    .eye{
+      position: absolute;
+      width: 14px;
+      height: 18px;
+      background: white;
+      border-radius: 50%;
+      top: 46px;
+    }
+
+    .eye::after{
       content: "";
       position: absolute;
-      width: 90px;
-      height: 90px;
-      background: rgba(139, 211, 221, 0.14);
+      width: 6px;
+      height: 6px;
+      background: #222;
       border-radius: 50%;
-      top: -30px;
-      right: -25px;
+      top: 6px;
+      left: 4px;
     }
 
-    .card-emoji {
-      font-size: 3.4rem;
-      margin-bottom: 10px;
-      animation: floaty 2.4s ease-in-out infinite;
+    .eye.left{ left: 34px; }
+    .eye.right{ right: 34px; }
+
+    .nose{
+      position: absolute;
+      width: 18px;
+      height: 12px;
+      background: #222;
+      border-radius: 50%;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 70px;
     }
 
-    .characters-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 16px;
-      margin-top: 20px;
+    .mouth{
+      position: absolute;
+      width: 30px;
+      height: 16px;
+      border-bottom: 3px solid #333;
+      border-radius: 0 0 20px 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 82px;
     }
 
-    .character-card {
-      border-radius: 20px;
-      padding: 18px;
-      text-align: center;
-      background: linear-gradient(180deg, #ffffff, #fffaf5);
-      border: 2px solid #f1e8dc;
-      transition: 0.25s ease;
-      box-shadow: 0 5px 14px rgba(0,0,0,0.05);
+    .blush{
+      position: absolute;
+      width: 18px;
+      height: 10px;
+      background: rgba(240,138,93,0.25);
+      border-radius: 50%;
+      top: 74px;
     }
 
-    .character-card:hover {
-      transform: translateY(-4px);
+    .blush.left{ left: 20px; }
+    .blush.right{ right: 20px; }
+
+    .wolf-body{
+      width: 110px;
+      height: 105px;
+      background: #9b9ba1;
+      border-radius: 35px;
+      margin: -8px auto 0;
+      position: relative;
     }
 
-    .character-avatar {
-      font-size: 3.4rem;
-      margin-bottom: 8px;
-      animation: bounceSmall 2.2s ease-in-out infinite;
+    .paw{
+      position: absolute;
+      width: 24px;
+      height: 34px;
+      background: #8b8b91;
+      bottom: -18px;
+      border-radius: 14px;
     }
 
-    .emotion-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 14px;
-      margin-top: 18px;
+    .paw.left{ left: 18px; }
+    .paw.right{ right: 18px; }
+
+    section{
+      padding: 40px 0;
     }
 
-    .emotion-item {
-      border-radius: 18px;
-      padding: 16px;
-      text-align: center;
-      border: 2px solid #f1e8dc;
-      background: linear-gradient(180deg, #fff, #fffaf6);
-      box-shadow: 0 5px 14px rgba(0,0,0,0.04);
-    }
-
-    .emotion-item .emoji {
-      font-size: 2.8rem;
-      margin-bottom: 10px;
-      animation: bounceSmall 2.4s ease-in-out infinite;
-    }
-
-    .emotion-tag {
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 0.9rem;
-      font-weight: bold;
-      margin-top: 8px;
-    }
-
-    .tag-joie { background: #fff2a8; color: #6f5600; }
-    .tag-tristesse { background: #dceeff; color: #1f4c73; }
-    .tag-peur { background: #eadcff; color: #5a368b; }
-    .tag-colere { background: #ffdada; color: #912f2f; }
-
-    .question-box {
-      background: linear-gradient(180deg, #fff8eb, #fff0d6);
-      border-left: 7px solid var(--blue);
-      border-radius: 18px;
-      padding: 18px;
-      margin: 18px 0;
-    }
-
-    .scene-card {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
+    .section-title{
+      font-size: 2rem;
       margin-bottom: 12px;
+      color: #5e3d2c;
     }
 
-    .scene-avatar {
-      width: 88px;
-      height: 88px;
-      border-radius: 50%;
+    .section-subtitle{
+      color: #6e5a50;
+      margin-bottom: 25px;
+      max-width: 760px;
+    }
+
+    .grid{
+      display: grid;
+      gap: 22px;
+    }
+
+    .grid-3{
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card{
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3{
+      margin-bottom: 10px;
+      color: #6d4332;
+    }
+
+    .feature-icon{
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: var(--bg-soft);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2.8rem;
-      background: linear-gradient(135deg, #fff, #f9f0e8);
-      border: 3px solid #f0d8c5;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.06);
-      flex-shrink: 0;
-      animation: bounceSmall 2.5s ease-in-out infinite;
+      font-size: 1.5rem;
+      margin-bottom: 15px;
     }
 
-    .scene-text {
-      flex: 1;
-      min-width: 220px;
-    }
-
-    .choices {
-      display: grid;
-      gap: 12px;
-      margin-top: 12px;
-    }
-
-    .choice-btn {
-      width: 100%;
-      text-align: left;
-      background: linear-gradient(180deg, #fff, #fffaf7);
-      border: 2px solid #dfd7cf;
-      color: #333;
-      padding: 14px 16px;
-      border-radius: 16px;
-      font-weight: bold;
-    }
-
-    .choice-btn:hover {
-      border-color: var(--blue);
-      background: #f5fdff;
-    }
-
-    .feedback {
-      margin-top: 18px;
-      padding: 14px 16px;
-      border-radius: 16px;
-      font-weight: bold;
-      display: none;
-    }
-
-    .feedback.success {
-      display: block;
-      background: #dcf7e7;
-      color: #155724;
-      border: 2px solid #bce9cf;
-    }
-
-    .feedback.error {
-      display: block;
-      background: #ffe2e2;
-      color: #8a2f2f;
-      border: 2px solid #f2c2c2;
-    }
-
-    .actions {
-      text-align: center;
-      margin-top: 18px;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .result-badge {
-      font-size: 4.2rem;
-      margin-bottom: 12px;
-      animation: pulse 2.4s ease-in-out infinite;
-    }
-
-    footer {
-      text-align: center;
+    .guide-box{
+      background: linear-gradient(135deg, #fff5e7, #fff);
+      border: 2px dashed #f0b27a;
+      border-radius: 20px;
       padding: 18px;
-      color: #7a7a7a;
-      font-size: 0.95rem;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      box-shadow: var(--shadow);
+      margin-top: 10px;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
+    .guide-avatar{
+      flex-shrink: 0;
+      width: 86px;
+      height: 86px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ffe3bf, #fff1dd);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.3rem;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    .guide-message{
+      font-size: 1rem;
+      color: #5c4b42;
     }
 
-    @keyframes bounceSmall {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
+    .quick-links{
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-top: 24px;
     }
 
-    @keyframes floaty {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
+    .quick-link{
+      background: linear-gradient(135deg, #fff9f0, #fff);
+      border: 2px solid #f1dcc8;
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      transition: 0.25s ease;
     }
 
-    @keyframes cloudMove {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(1300px); }
+    .quick-link:hover{
+      transform: translateY(-4px);
+      border-color: #f0b27a;
     }
 
-    @keyframes pulse {
-      0%,100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
+    .quick-link span{
+      display: inline-block;
+      margin-bottom: 10px;
+      font-size: 1.6rem;
     }
 
-    @keyframes sparkle {
-      0%,100% { opacity: 0.7; transform: translateY(0); }
-      50% { opacity: 1; transform: translateY(-4px); }
+    footer{
+      margin-top: 40px;
+      background: #5e3d2c;
+      color: #fff6ed;
+      padding: 28px 0;
+      text-align: center;
     }
 
-    @keyframes sway {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-2px); }
+    .small{
+      font-size: 0.92rem;
+      opacity: 0.95;
     }
 
-    @media (max-width: 700px) {
-      header h1 {
-        font-size: 1.7rem;
+    .note{
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #6f5b4e;
+    }
+
+    .fade-in{
+      opacity: 0;
+      transform: translateY(18px);
+      transition: all 0.7s ease;
+    }
+
+    .fade-in.visible{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1000px){
+      .quick-links{
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 900px){
+      .hero-content,
+      .grid-3{
+        grid-template-columns: 1fr;
       }
 
-      h2 {
-        font-size: 1.5rem;
+      .hero{
+        padding-top: 35px;
       }
 
-      .wolf-main {
-        font-size: 5.2rem;
+      .hero-illustration{
+        min-height: 320px;
       }
 
-      .hero {
-        min-height: 470px;
-      }
-
-      .scene-card {
+      .nav{
         flex-direction: column;
         align-items: flex-start;
       }
 
-      .scene-avatar {
-        width: 74px;
-        height: 74px;
-        font-size: 2.4rem;
+      .nav-links{
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 620px){
+      .quick-links{
+        grid-template-columns: 1fr;
+      }
+
+      .guide-box{
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
   </style>
 </head>
 <body>
+
   <header>
-    <h1>Émotions & Moi</h1>
-    <p>Apprendre avec le loup</p>
+    <div class="container nav">
+      <div class="logo">🐺 Émotions & Moi - Le Loup</div>
+      <nav class="nav-links">
+        <a href="index.html" class="active">Accueil</a>
+        <a href="histoire.html">Histoire</a>
+        <a href="personnages.html">Personnages</a>
+        <a href="emotions.html">Émotions</a>
+        <a href="jeux.html">Mini-jeux</a>
+        <a href="progression.html">Progression</a>
+      </nav>
+    </div>
   </header>
 
   <main>
-    <!-- ACCUEIL -->
-    <section id="homeScreen" class="screen active">
-      <div class="hero center">
-        <div class="sun">☀️</div>
-        <div class="cloud cloud1">☁️</div>
-        <div class="cloud cloud2">☁️</div>
-        <div class="cloud cloud3">☁️</div>
+    <section class="hero">
+      <div class="container hero-content">
+        <div class="hero-text fade-in">
+          <h1>Bienvenue dans le monde du loup et des émotions</h1>
+          <p>
+            Ce projet transforme l’histoire du loup en parcours interactif pour enfants.
+            L’enfant découvre des situations, apprend à reconnaître les émotions,
+            choisit des réactions adaptées et développe peu à peu sa confiance en soi.
+          </p>
 
-        <div class="wolf-zone">
-          <div class="mini-stars">
-            <span>✨</span>
+          <div class="badges">
+            <div class="badge">Projet jeunesse</div>
+            <div class="badge">Mini-jeux éducatifs</div>
+            <div class="badge">Émotions & confiance en soi</div>
+          </div>
+
+          <div class="buttons">
+            <a href="jeux.html" class="btn btn-primary">Commencer les jeux</a>
+            <a href="emotions.html" class="btn btn-secondary">Voir les émotions</a>
+          </div>
+
+          <p class="note">
+            Une adaptation pédagogique pensée pour les enfants, les parents et les enseignants.
+          </p>
+        </div>
+
+        <div class="hero-card fade-in">
+          <div class="hero-illustration">
+            <div class="sun"></div>
+            <div class="cloud one"></div>
+            <div class="cloud two"></div>
+            <div class="forest"></div>
+
+            <div class="wolf">
+              <div class="wolf-head">
+                <div class="ear left"></div>
+                <div class="ear right"></div>
+                <div class="eye left"></div>
+                <div class="eye right"></div>
+                <div class="nose"></div>
+                <div class="mouth"></div>
+                <div class="blush left"></div>
+                <div class="blush right"></div>
+              </div>
+              <div class="wolf-body">
+                <div class="paw left"></div>
+                <div class="paw right"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2 class="section-title fade-in">Le projet en quelques mots</h2>
+        <p class="section-subtitle fade-in">
+          Cette version numérique est construite comme un parcours simple, visuel et interactif.
+          L’enfant ne lit pas seulement l’histoire : il devient acteur de son apprentissage.
+        </p>
+
+        <div class="grid grid-3">
+          <div class="card fade-in">
+            <div class="feature-icon">📖</div>
+            <h3>Découvrir l’histoire</h3>
+            <p>
+              Le loup a peur de beaucoup de choses, mais il apprend peu à peu à mieux comprendre ce qu’il ressent.
+            </p>
+          </div>
+
+          <div class="card fade-in">
+            <div class="feature-icon">😊</div>
+            <h3>Comprendre les émotions</h3>
+            <p>
+              L’enfant apprend à reconnaître la joie, la tristesse, la peur et la colère dans des situations simples.
+            </p>
+          </div>
+
+          <div class="card fade-in">
+            <div class="feature-icon">🎮</div>
+            <h3>Jouer et progresser</h3>
+            <p>
+              Grâce aux mini-jeux, l’enfant choisit, répond, reçoit un retour immédiat et avance à son rythme.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2 class="section-title fade-in">Le loup te guide</h2>
+        <p class="section-subtitle fade-in">
+          Dans ce projet, le loup devient un personnage guide qui accompagne l’enfant dans chaque étape.
+        </p>
+
+        <div class="guide-box fade-in">
+          <div class="guide-avatar">🐺</div>
+          <div class="guide-message">
+            Bonjour ! Je suis le loup. Tu peux commencer par découvrir mon histoire,
+            rencontrer les personnages, apprendre les émotions, puis essayer les mini-jeux.
+          </div>
+        </div>
+
+        <div class="quick-links">
+          <a href="histoire.html" class="quick-link fade-in">
+            <span>📖</span>
+            <h3>Lire l’histoire</h3>
+            <p>Découvrir le parcours du loup et le message du projet.</p>
+          </a>
+
+          <a href="personnages.html" class="quick-link fade-in">
+            <span>🧒</span>
+            <h3>Voir les personnages</h3>
+            <p>Retrouver le loup et les autres personnages liés aux émotions.</p>
+          </a>
+
+          <a href="emotions.html" class="quick-link fade-in">
+            <span>🌈</span>
+            <h3>Découvrir les émotions</h3>
+            <p>Apprendre à mettre des mots sur ce que l’on ressent.</p>
+          </a>
+
+          <a href="jeux.html" class="quick-link fade-in">
             <span>⭐</span>
-            <span>✨</span>
-          </div>
-          <div class="wolf-main">🐺</div>
+            <h3>Commencer les jeux</h3>
+            <p>Essayer les activités interactives prévues dans le projet.</p>
+          </a>
         </div>
-
-        <div class="hero-text">
-          <h2>Bienvenue dans le monde des émotions</h2>
-          <p>
-            Bonjour, je suis le loup. Avec moi, tu vas apprendre à reconnaître
-            la joie, la tristesse, la peur et la colère.
-          </p>
-          <p>
-            Tu pourras découvrir les émotions, rencontrer des personnages,
-            jouer à des mini-jeux et gagner des points.
-          </p>
-          <button class="btn-primary" onclick="showScreen('menuScreen')">Commencer</button>
-        </div>
-
-        <div class="ground"></div>
-        <div class="flowers">
-          <span>🌼</span>
-          <span>🌷</span>
-          <span>🌼</span>
-          <span>🌻</span>
-          <span>🌷</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- MENU -->
-    <section id="menuScreen" class="screen">
-      <div class="top-bar">
-        <div class="score-box">Score total : <span id="globalScore">0</span> ⭐</div>
-        <button class="btn-secondary" onclick="showScreen('homeScreen')">Retour à l’accueil</button>
-      </div>
-
-      <h2 class="center">Choisis ce que tu veux faire</h2>
-
-      <div class="cards">
-        <div class="card">
-          <div class="card-emoji">😊</div>
-          <h3>Découvrir les émotions</h3>
-          <p>Apprends les émotions avec des couleurs, des visages et des explications simples.</p>
-          <button class="btn-primary" onclick="showScreen('emotionsScreen')">Découvrir</button>
-        </div>
-
-        <div class="card">
-          <div class="card-emoji">👧🧒🐺</div>
-          <h3>Rencontrer les personnages</h3>
-          <p>Retrouve le loup et ses amis dans des situations du quotidien.</p>
-          <button class="btn-soft" onclick="showScreen('charactersScreen')">Voir les personnages</button>
-        </div>
-
-        <div class="card">
-          <div class="card-emoji">🎯</div>
-          <h3>Jeu 1</h3>
-          <p>Reconnais l’émotion ressentie par le personnage.</p>
-          <button class="btn-primary" onclick="startQuiz('quiz1')">Jouer</button>
-        </div>
-
-        <div class="card">
-          <div class="card-emoji">🧠</div>
-          <h3>Jeu 2</h3>
-          <p>Associe une situation à la bonne émotion.</p>
-          <button class="btn-primary" onclick="startQuiz('quiz2')">Jouer</button>
-        </div>
-
-        <div class="card">
-          <div class="card-emoji">🌟</div>
-          <h3>Jeu 3</h3>
-          <p>Choisis la réaction qui aide le mieux le personnage.</p>
-          <button class="btn-primary" onclick="startQuiz('quiz3')">Jouer</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- EMOTIONS -->
-    <section id="emotionsScreen" class="screen">
-      <div class="top-bar">
-        <div class="score-box">Score total : <span id="globalScore2">0</span> ⭐</div>
-        <button class="btn-secondary" onclick="showScreen('menuScreen')">Retour au menu</button>
-      </div>
-
-      <h2 class="center">Les émotions à découvrir</h2>
-      <p class="center">
-        Chaque émotion a une couleur, une expression et une explication simple.
-      </p>
-
-      <div class="emotion-list" id="emotionList"></div>
-    </section>
-
-    <!-- PERSONNAGES -->
-    <section id="charactersScreen" class="screen">
-      <div class="top-bar">
-        <div class="score-box">Score total : <span id="globalScore3">0</span> ⭐</div>
-        <button class="btn-secondary" onclick="showScreen('menuScreen')">Retour au menu</button>
-      </div>
-
-      <h2 class="center">Les personnages de l’histoire</h2>
-      <p class="center">
-        Le loup et ses amis vivent des émotions différentes. Observe-les avant de jouer.
-      </p>
-
-      <div class="characters-grid" id="charactersList"></div>
-    </section>
-
-    <!-- QUIZ -->
-    <section id="quizScreen" class="screen">
-      <div class="top-bar">
-        <div class="score-box">
-          Score du jeu : <span id="quizScore">0</span> ⭐ | Question <span id="questionNumber">1</span>
-        </div>
-        <button class="btn-secondary" onclick="showScreen('menuScreen')">Quitter</button>
-      </div>
-
-      <h2 id="quizTitle" class="center">Mini-jeu</h2>
-
-      <div class="question-box">
-        <div class="scene-card">
-          <div class="scene-avatar" id="sceneAvatar">🐺</div>
-          <div class="scene-text">
-            <p id="quizCharacter"></p>
-            <p id="quizQuestion"></p>
-          </div>
-        </div>
-      </div>
-
-      <div class="choices" id="choicesContainer"></div>
-
-      <div id="feedbackBox" class="feedback"></div>
-
-      <div class="actions">
-        <button id="nextBtn" class="btn-primary hidden" onclick="nextQuestion()">Question suivante</button>
-        <button id="finishBtn" class="btn-soft hidden" onclick="finishQuiz()">Voir le résultat</button>
-      </div>
-    </section>
-
-    <!-- RESULTAT -->
-    <section id="resultScreen" class="screen">
-      <div class="center">
-        <div class="result-badge">🏆</div>
-        <h2>Bravo !</h2>
-        <p id="resultText"></p>
-        <button class="btn-primary" onclick="showScreen('menuScreen')">Retour au menu</button>
       </div>
     </section>
   </main>
 
   <footer>
-    🐺 Projet pédagogique – Émotions & Moi
+    <div class="container">
+      <p><strong>Projet universitaire - Cahier des charges hypermédia</strong></p>
+      <p class="small">
+        Adaptation web interactive autour du loup, des émotions et de la confiance en soi.
+      </p>
+    </div>
   </footer>
 
   <script>
-    const emotions = [
-      {
-        name: "Joie",
-        emoji: "😊",
-        color: "Jaune",
-        description: "La joie, c’est quand on se sent heureux, léger et content.",
-        tagClass: "tag-joie"
-      },
-      {
-        name: "Tristesse",
-        emoji: "😢",
-        color: "Bleu",
-        description: "La tristesse, c’est quand on a du chagrin ou qu’on se sent déçu.",
-        tagClass: "tag-tristesse"
-      },
-      {
-        name: "Peur",
-        emoji: "😨",
-        color: "Violet",
-        description: "La peur, c’est quand quelque chose nous inquiète ou nous impressionne.",
-        tagClass: "tag-peur"
-      },
-      {
-        name: "Colère",
-        emoji: "😠",
-        color: "Rouge",
-        description: "La colère, c’est quand on est très énervé ou frustré.",
-        tagClass: "tag-colere"
-      }
-    ];
-
-    const characters = [
-      {
-        avatar: "🐺",
-        name: "Le loup",
-        text: "Il découvre qu’avoir peur est normal et qu’on peut apprendre à se rassurer."
-      },
-      {
-        avatar: "👧",
-        name: "Lina",
-        text: "Elle aime jouer avec ses amis mais elle peut parfois être timide."
-      },
-      {
-        avatar: "🧒",
-        name: "Sami",
-        text: "Il est souvent joyeux, mais il peut aussi être triste ou en colère."
-      },
-      {
-        avatar: "👦",
-        name: "Yanis",
-        text: "Quand quelque chose ne fonctionne pas, il doit apprendre à se calmer."
-      },
-      {
-        avatar: "👩",
-        name: "Emma",
-        text: "Elle apprend à parler de ses émotions au lieu de les garder pour elle."
-      }
-    ];
-
-    const quizzes = {
-      quiz1: {
-        title: "Jeu 1 : Reconnaître l’émotion",
-        questions: [
-          {
-            avatar: "🐺",
-            character: "Le loup entend un gros bruit dans la nuit.",
-            question: "Quelle émotion ressent-il ?",
-            choices: ["Joie", "Peur", "Colère"],
-            answer: "Peur",
-            success: "Bravo ! Le loup a peur à cause du bruit.",
-            error: "Ce n’est pas ça. Quand quelque chose nous inquiète, on peut ressentir de la peur."
-          },
-          {
-            avatar: "🐺",
-            character: "Le loup joue avec ses amis dans le jardin.",
-            question: "Quelle émotion ressent-il ?",
-            choices: ["Tristesse", "Joie", "Peur"],
-            answer: "Joie",
-            success: "Très bien ! Jouer avec ses amis donne de la joie.",
-            error: "Ce n’est pas correct. Ici, il s’amuse, donc il ressent de la joie."
-          },
-          {
-            avatar: "🐺",
-            character: "Le loup perd son jouet préféré.",
-            question: "Quelle émotion ressent-il ?",
-            choices: ["Colère", "Joie", "Tristesse"],
-            answer: "Tristesse",
-            success: "Oui, perdre quelque chose qu’on aime peut rendre triste.",
-            error: "Pas exactement. Ici, il ressent surtout de la tristesse."
-          }
-        ]
-      },
-
-      quiz2: {
-        title: "Jeu 2 : Associer situation / émotion",
-        questions: [
-          {
-            avatar: "👧",
-            character: "Lina doit parler devant toute la classe.",
-            question: "Quelle émotion peut-elle ressentir ?",
-            choices: ["Peur", "Joie", "Calme"],
-            answer: "Peur",
-            success: "Oui, parler devant beaucoup de personnes peut faire peur.",
-            error: "Ce n’est pas ça. Dans cette situation, Lina peut ressentir de la peur."
-          },
-          {
-            avatar: "🧒",
-            character: "Sami reçoit un cadeau qu’il attendait depuis longtemps.",
-            question: "Quelle émotion ressent-il ?",
-            choices: ["Tristesse", "Joie", "Colère"],
-            answer: "Joie",
-            success: "Bravo ! Recevoir un cadeau attendu peut donner beaucoup de joie.",
-            error: "Ce n’est pas correct. Ici, Sami ressent de la joie."
-          },
-          {
-            avatar: "👦",
-            character: "Yanis n’arrive pas à construire sa tour de cubes.",
-            question: "Quelle émotion peut apparaître ?",
-            choices: ["Colère", "Joie", "Peur"],
-            answer: "Colère",
-            success: "Oui ! Quand on n’arrive pas à faire quelque chose, on peut se mettre en colère.",
-            error: "Pas tout à fait. Ici, la situation peut provoquer de la colère."
-          }
-        ]
-      },
-
-      quiz3: {
-        title: "Jeu 3 : Choisir la bonne réaction",
-        questions: [
-          {
-            avatar: "🐺",
-            character: "Le loup a peur du noir.",
-            question: "Quelle réaction peut l’aider ?",
-            choices: [
-              "Respirer doucement et allumer une petite lumière",
-              "Crier très fort et partir en courant",
-              "Se cacher sans rien dire"
-            ],
-            answer: "Respirer doucement et allumer une petite lumière",
-            success: "Très bien ! Respirer et chercher une solution aide à se calmer.",
-            error: "Cette réaction n’aide pas vraiment. Respirer doucement et demander de l’aide est mieux."
-          },
-          {
-            avatar: "👩",
-            character: "Emma est triste parce que sa meilleure amie est absente.",
-            question: "Quelle réaction est adaptée ?",
-            choices: [
-              "Parler de sa tristesse à un adulte ou à un ami",
-              "Jeter toutes ses affaires",
-              "Se moquer des autres"
-            ],
-            answer: "Parler de sa tristesse à un adulte ou à un ami",
-            success: "Bravo ! Parler de ce qu’on ressent peut aider.",
-            error: "Ce n’est pas la meilleure réaction. Il vaut mieux parler de sa tristesse."
-          },
-          {
-            avatar: "👦",
-            character: "Yanis est en colère après avoir perdu un jeu.",
-            question: "Que peut-il faire ?",
-            choices: [
-              "Prendre une pause et respirer",
-              "Pousser son camarade",
-              "Casser le jeu"
-            ],
-            answer: "Prendre une pause et respirer",
-            success: "Oui ! Faire une pause permet de retrouver son calme.",
-            error: "Cette réaction n’est pas adaptée. Il vaut mieux se calmer d’abord."
-          }
-        ]
-      }
-    };
-
-    let globalScore = 0;
-    let currentQuizKey = null;
-    let currentQuestionIndex = 0;
-    let currentQuizScore = 0;
-    let answered = false;
-
-    function showScreen(screenId) {
-      const screens = document.querySelectorAll(".screen");
-      screens.forEach(screen => screen.classList.remove("active"));
-      document.getElementById(screenId).classList.add("active");
-      updateGlobalScore();
-    }
-
-    function updateGlobalScore() {
-      const ids = ["globalScore", "globalScore2", "globalScore3"];
-      ids.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = globalScore;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add("visible");
+        }
       });
-    }
+    }, { threshold: 0.15 });
 
-    function renderEmotions() {
-      const container = document.getElementById("emotionList");
-      container.innerHTML = "";
-
-      emotions.forEach(emotion => {
-        const div = document.createElement("div");
-        div.className = "emotion-item";
-        div.innerHTML = `
-          <div class="emoji">${emotion.emoji}</div>
-          <h3>${emotion.name}</h3>
-          <p>${emotion.description}</p>
-          <div class="emotion-tag ${emotion.tagClass}">Couleur : ${emotion.color}</div>
-        `;
-        container.appendChild(div);
-      });
-    }
-
-    function renderCharacters() {
-      const container = document.getElementById("charactersList");
-      container.innerHTML = "";
-
-      characters.forEach(character => {
-        const div = document.createElement("div");
-        div.className = "character-card";
-        div.innerHTML = `
-          <div class="character-avatar">${character.avatar}</div>
-          <h3>${character.name}</h3>
-          <p>${character.text}</p>
-        `;
-        container.appendChild(div);
-      });
-    }
-
-    function startQuiz(quizKey) {
-      currentQuizKey = quizKey;
-      currentQuestionIndex = 0;
-      currentQuizScore = 0;
-      answered = false;
-      showScreen("quizScreen");
-      renderQuestion();
-    }
-
-    function renderQuestion() {
-      const quiz = quizzes[currentQuizKey];
-      const questionData = quiz.questions[currentQuestionIndex];
-
-      document.getElementById("quizTitle").textContent = quiz.title;
-      document.getElementById("quizCharacter").textContent = questionData.character;
-      document.getElementById("quizQuestion").textContent = questionData.question;
-      document.getElementById("quizScore").textContent = currentQuizScore;
-      document.getElementById("questionNumber").textContent = currentQuestionIndex + 1;
-      document.getElementById("sceneAvatar").textContent = questionData.avatar || "🐺";
-
-      const choicesContainer = document.getElementById("choicesContainer");
-      choicesContainer.innerHTML = "";
-
-      questionData.choices.forEach(choice => {
-        const button = document.createElement("button");
-        button.className = "choice-btn";
-        button.textContent = choice;
-        button.onclick = () => checkAnswer(choice);
-        choicesContainer.appendChild(button);
-      });
-
-      const feedbackBox = document.getElementById("feedbackBox");
-      feedbackBox.className = "feedback";
-      feedbackBox.style.display = "none";
-      feedbackBox.textContent = "";
-
-      document.getElementById("nextBtn").classList.add("hidden");
-      document.getElementById("finishBtn").classList.add("hidden");
-      answered = false;
-    }
-
-    function checkAnswer(selectedChoice) {
-      if (answered) return;
-      answered = true;
-
-      const quiz = quizzes[currentQuizKey];
-      const questionData = quiz.questions[currentQuestionIndex];
-      const feedbackBox = document.getElementById("feedbackBox");
-
-      if (selectedChoice === questionData.answer) {
-        currentQuizScore++;
-        globalScore++;
-        document.getElementById("quizScore").textContent = currentQuizScore;
-        feedbackBox.textContent = questionData.success;
-        feedbackBox.className = "feedback success";
-      } else {
-        feedbackBox.textContent = questionData.error;
-        feedbackBox.className = "feedback error";
-      }
-
-      feedbackBox.style.display = "block";
-      updateGlobalScore();
-
-      const isLastQuestion = currentQuestionIndex === quiz.questions.length - 1;
-      if (isLastQuestion) {
-        document.getElementById("finishBtn").classList.remove("hidden");
-      } else {
-        document.getElementById("nextBtn").classList.remove("hidden");
-      }
-    }
-
-    function nextQuestion() {
-      currentQuestionIndex++;
-      renderQuestion();
-    }
-
-    function finishQuiz() {
-      const total = quizzes[currentQuizKey].questions.length;
-      let message = `Tu as obtenu ${currentQuizScore} bonne(s) réponse(s) sur ${total}. `;
-
-      if (currentQuizScore === total) {
-        message += "Bravo, tu connais très bien les émotions !";
-      } else if (currentQuizScore >= 2) {
-        message += "C’est très bien, continue comme ça !";
-      } else {
-        message += "Tu peux recommencer pour encore mieux apprendre.";
-      }
-
-      document.getElementById("resultText").textContent = message;
-      showScreen("resultScreen");
-    }
-
-    renderEmotions();
-    renderCharacters();
-    updateGlobalScore();
+    document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
   </script>
 </body>
 </html>
