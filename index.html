@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Émotions & Moi - Accueil</title>
+  <title>Émotions & Moi - Le Loup</title>
   <meta name="description" content="Projet interactif jeunesse autour du loup, des émotions et de la confiance en soi." />
   <style>
     :root{
@@ -18,18 +18,20 @@
       --blue: #7cc6fe;
       --pink: #f7b2d0;
       --purple: #d8c4f2;
+      --success: #43a047;
+      --danger: #d32f2f;
       --shadow: 0 10px 25px rgba(0,0,0,0.08);
       --radius: 22px;
     }
 
     *{
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
     }
 
     html{
-      scroll-behavior: smooth;
+      scroll-behavior:smooth;
     }
 
     body{
@@ -40,207 +42,604 @@
     }
 
     a{
-      text-decoration: none;
-      color: inherit;
+      text-decoration:none;
+      color:inherit;
     }
 
     header{
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      position:sticky;
+      top:0;
+      z-index:1000;
       background: rgba(255,250,244,0.96);
       backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(0,0,0,0.05);
+      border-bottom:1px solid rgba(0,0,0,0.05);
     }
 
     .container{
-      width: min(1120px, 92%);
-      margin: 0 auto;
+      width:min(1120px, 92%);
+      margin:0 auto;
     }
 
     .nav{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 0;
-      gap: 20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      padding:16px 0;
     }
 
     .logo{
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: var(--accent-dark);
+      font-size:1.1rem;
+      font-weight:bold;
+      color:var(--accent-dark);
     }
 
     .nav-links{
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      font-size: 0.95rem;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      font-size:0.95rem;
     }
 
     .nav-links a{
-      padding: 8px 12px;
-      border-radius: 999px;
-      transition: 0.25s;
+      padding:8px 12px;
+      border-radius:999px;
+      transition:0.2s;
     }
 
-    .nav-links a:hover,
-    .nav-links a.active{
-      background: var(--bg-soft);
-      color: var(--accent-dark);
+    .nav-links a:hover{
+      background:var(--bg-soft);
+      color:var(--accent-dark);
+    }
+
+    section{
+      padding:42px 0;
     }
 
     .hero{
-      padding: 60px 0 40px;
+      padding:60px 0 40px;
     }
 
     .hero-content{
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 35px;
-      align-items: center;
+      display:grid;
+      grid-template-columns:1.1fr 0.9fr;
+      gap:34px;
+      align-items:center;
     }
 
     .hero-text h1{
-      font-size: clamp(2rem, 5vw, 3.4rem);
-      line-height: 1.1;
-      margin-bottom: 18px;
-      color: #553939;
+      font-size: clamp(2rem, 5vw, 3.3rem);
+      line-height:1.1;
+      margin-bottom:18px;
+      color:#553939;
     }
 
     .hero-text p{
-      font-size: 1.05rem;
-      margin-bottom: 20px;
-      max-width: 650px;
+      font-size:1.05rem;
+      margin-bottom:18px;
+      max-width:650px;
     }
 
     .badges{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 22px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:16px 0 22px;
     }
 
     .badge{
-      background: #fff;
-      border: 2px solid #f7d7b8;
-      color: #7a5a44;
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 0.92rem;
-      box-shadow: var(--shadow);
+      background:#fff;
+      border:2px solid #f7d7b8;
+      color:#7a5a44;
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:0.92rem;
+      box-shadow:var(--shadow);
     }
 
     .buttons{
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin-top:8px;
     }
 
     .btn{
-      display: inline-block;
-      padding: 13px 22px;
-      border-radius: 14px;
-      font-weight: bold;
-      transition: transform 0.2s ease, background 0.2s ease;
-      cursor: pointer;
-      border: none;
-      font-size: 1rem;
+      display:inline-block;
+      padding:13px 22px;
+      border-radius:14px;
+      font-weight:bold;
+      transition:transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      cursor:pointer;
+      border:none;
+      font-size:1rem;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
     }
 
     .btn-primary{
-      background: var(--accent);
-      color: white;
-      box-shadow: var(--shadow);
+      background:var(--accent);
+      color:white;
+      box-shadow:var(--shadow);
     }
 
     .btn-primary:hover{
-      background: var(--accent-dark);
-      transform: translateY(-2px);
+      background:var(--accent-dark);
     }
 
     .btn-secondary{
-      background: white;
-      color: var(--accent-dark);
-      border: 2px solid #f7d7b8;
+      background:white;
+      color:var(--accent-dark);
+      border:2px solid #f7d7b8;
     }
 
     .btn-secondary:hover{
-      transform: translateY(-2px);
-      background: var(--bg-soft);
+      background:var(--bg-soft);
     }
 
     .hero-card{
-      background: white;
-      padding: 24px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
+      background:white;
+      padding:24px;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
     }
 
     .hero-illustration{
       background: linear-gradient(135deg, #fff0dc, #ffe4b8);
-      border-radius: 20px;
-      min-height: 390px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
+      border-radius:20px;
+      min-height:390px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position:relative;
+      overflow:hidden;
     }
 
     .sun{
-      position: absolute;
-      top: 28px;
-      right: 28px;
-      width: 80px;
-      height: 80px;
-      background: #ffd166;
-      border-radius: 50%;
-      box-shadow: 0 0 0 14px rgba(255, 209, 102, 0.2);
+      position:absolute;
+      top:28px;
+      right:28px;
+      width:80px;
+      height:80px;
+      background:#ffd166;
+      border-radius:50%;
+      box-shadow:0 0 0 14px rgba(255,209,102,0.2);
+      animation:pulseSun 3s infinite ease-in-out;
     }
 
     .cloud{
-      position: absolute;
-      background: #fff;
-      border-radius: 999px;
-      opacity: 0.95;
+      position:absolute;
+      background:#fff;
+      border-radius:999px;
+      opacity:0.95;
+      animation:floatCloud 7s infinite ease-in-out;
     }
 
     .cloud.one{
-      width: 100px;
-      height: 42px;
-      top: 65px;
-      left: 35px;
+      width:100px;
+      height:42px;
+      top:65px;
+      left:35px;
     }
 
     .cloud.two{
-      width: 80px;
-      height: 36px;
-      top: 120px;
-      left: 110px;
+      width:80px;
+      height:36px;
+      top:120px;
+      left:110px;
+      animation-delay:1s;
     }
 
     .forest{
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 120px;
+      position:absolute;
+      bottom:0;
+      left:0;
+      width:100%;
+      height:120px;
       background: linear-gradient(180deg, #93c47d 0%, #6aa84f 100%);
-      border-top-left-radius: 30px;
-      border-top-right-radius: 30px;
+      border-top-left-radius:30px;
+      border-top-right-radius:30px;
     }
 
     .wolf{
-      position: relative;
-      width: 180px;
-      height: 220px;
-      z-index: 2;
-      animation: floatWolf 2.6s ease-in-out infinite;
+      position:relative;
+      width:180px;
+      height:220px;
+      z-index:2;
+      animation:floatWolf 2.6s ease-in-out infinite;
+    }
+
+    .wolf-head{
+      width:130px;
+      height:120px;
+      background:#8f8f95;
+      border-radius:35% 35% 42% 42%;
+      margin:0 auto;
+      position:relative;
+      top:10px;
+    }
+
+    .ear{
+      position:absolute;
+      width:38px;
+      height:48px;
+      background:#76767c;
+      top:-18px;
+      border-radius:40% 40% 10% 10%;
+    }
+
+    .ear.left{ left:12px; transform:rotate(-16deg); }
+    .ear.right{ right:12px; transform:rotate(16deg); }
+
+    .eye{
+      position:absolute;
+      width:14px;
+      height:18px;
+      background:white;
+      border-radius:50%;
+      top:46px;
+    }
+
+    .eye::after{
+      content:"";
+      position:absolute;
+      width:6px;
+      height:6px;
+      background:#222;
+      border-radius:50%;
+      top:6px;
+      left:4px;
+    }
+
+    .eye.left{ left:34px; }
+    .eye.right{ right:34px; }
+
+    .nose{
+      position:absolute;
+      width:18px;
+      height:12px;
+      background:#222;
+      border-radius:50%;
+      left:50%;
+      transform:translateX(-50%);
+      top:70px;
+    }
+
+    .mouth{
+      position:absolute;
+      width:30px;
+      height:16px;
+      border-bottom:3px solid #333;
+      border-radius:0 0 20px 20px;
+      left:50%;
+      transform:translateX(-50%);
+      top:82px;
+    }
+
+    .blush{
+      position:absolute;
+      width:18px;
+      height:10px;
+      background:rgba(240,138,93,0.25);
+      border-radius:50%;
+      top:74px;
+    }
+
+    .blush.left{ left:20px; }
+    .blush.right{ right:20px; }
+
+    .wolf-body{
+      width:110px;
+      height:105px;
+      background:#9b9ba1;
+      border-radius:35px;
+      margin:-8px auto 0;
+      position:relative;
+    }
+
+    .paw{
+      position:absolute;
+      width:24px;
+      height:34px;
+      background:#8b8b91;
+      bottom:-18px;
+      border-radius:14px;
+    }
+
+    .paw.left{ left:18px; }
+    .paw.right{ right:18px; }
+
+    .section-title{
+      font-size:2rem;
+      margin-bottom:12px;
+      color:#5e3d2c;
+    }
+
+    .section-subtitle{
+      color:#6e5a50;
+      margin-bottom:24px;
+      max-width:760px;
+    }
+
+    .grid{
+      display:grid;
+      gap:20px;
+    }
+
+    .grid-2{
+      grid-template-columns:repeat(2, 1fr);
+    }
+
+    .grid-3{
+      grid-template-columns:repeat(3, 1fr);
+    }
+
+    .grid-4{
+      grid-template-columns:repeat(4, 1fr);
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+
+    .card h3{
+      margin-bottom:10px;
+      color:#6d4332;
+    }
+
+    .story-step{
+      position:relative;
+      padding-left:52px;
+    }
+
+    .story-step::before{
+      content:attr(data-step);
+      position:absolute;
+      left:0;
+      top:0;
+      width:34px;
+      height:34px;
+      background:var(--accent);
+      color:white;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:bold;
+    }
+
+    .feature-icon{
+      width:52px;
+      height:52px;
+      border-radius:16px;
+      background:var(--bg-soft);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:1.5rem;
+      margin-bottom:14px;
+    }
+
+    .emotion{
+      text-align:center;
+      transition:0.2s;
+    }
+
+    .emotion:hover{
+      transform:translateY(-4px);
+    }
+
+    .emoji{
+      font-size:2.1rem;
+      margin-bottom:10px;
+    }
+
+    .emotion-tag{
+      display:inline-block;
+      margin-top:10px;
+      padding:6px 12px;
+      border-radius:999px;
+      font-size:0.9rem;
+      font-weight:bold;
+    }
+
+    .tag-yellow{ background:#fff0a8; color:#7a5b00; }
+    .tag-blue{ background:#dff0ff; color:#2f5f89; }
+    .tag-purple{ background:#ede1ff; color:#6a43a3; }
+    .tag-red{ background:#ffdada; color:#8a2b2b; }
+
+    .game-selector{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:16px;
+      margin-bottom:24px;
+    }
+
+    .game-btn{
+      background:linear-gradient(135deg, #fff9f0, #fff);
+      border:2px solid #f1dcc8;
+      border-radius:18px;
+      padding:16px;
+      font-weight:bold;
+      color:#6d4332;
+      cursor:pointer;
+      transition:0.2s;
+      box-shadow:var(--shadow);
+    }
+
+    .game-btn:hover,
+    .game-btn.active{
+      border-color:#f0b27a;
+      transform:translateY(-3px);
+      background:#fff5ea;
+    }
+
+    .game-panel{
+      background:linear-gradient(135deg, #fff5e7, #fff);
+      border-radius:24px;
+      padding:28px;
+      box-shadow:var(--shadow);
+    }
+
+    .game-panel h3{
+      margin-bottom:8px;
+      color:#5a3c2f;
+      font-size:1.4rem;
+    }
+
+    .game-desc{
+      color:#705c50;
+      margin-bottom:18px;
+    }
+
+    .question-box{
+      background:#fff;
+      border:2px solid #f1dcc8;
+      border-radius:18px;
+      padding:16px;
+      margin-bottom:18px;
+      display:flex;
+      gap:16px;
+      align-items:center;
+    }
+
+    .scene-avatar{
+      width:74px;
+      height:74px;
+      border-radius:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:2rem;
+      background:linear-gradient(135deg, #fff0dc, #ffe4b8);
+      flex-shrink:0;
+    }
+
+    .question-text{
+      font-size:1.1rem;
+      font-weight:bold;
+      color:#5a3c2f;
+    }
+
+    .answers{
+      display:grid;
+      gap:12px;
+    }
+
+    .answer-btn{
+      text-align:left;
+      background:white;
+      border:2px solid #f1dcc8;
+      padding:14px 16px;
+      border-radius:14px;
+      cursor:pointer;
+      transition:0.2s;
+      font-size:1rem;
+    }
+
+    .answer-btn:hover:not(:disabled){
+      background:#fff6ea;
+      border-color:#f0b27a;
+    }
+
+    .answer-btn:disabled{
+      cursor:default;
+      opacity:0.95;
+    }
+
+    .answer-btn.correct{
+      border-color:#9ad29e;
+      background:#e8f7e9;
+    }
+
+    .answer-btn.wrong{
+      border-color:#efb0b0;
+      background:#fdeaea;
+    }
+
+    .result{
+      min-height:30px;
+      margin-top:16px;
+      font-weight:bold;
+    }
+
+    .result.success{
+      color:var(--success);
+    }
+
+    .result.error{
+      color:var(--danger);
+    }
+
+    .controls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .progress-card{
+      display:grid;
+      gap:14px;
+    }
+
+    .progress-stats{
+      display:flex;
+      flex-wrap:wrap;
+      gap:18px;
+      font-weight:bold;
+      color:#6e5244;
+    }
+
+    .progress-line{
+      width:100%;
+      height:20px;
+      background:#f1e5d8;
+      border-radius:999px;
+      overflow:hidden;
+    }
+
+    .progress-fill{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius:999px;
+      transition:width 0.35s ease;
+    }
+
+    .progress-note{
+      font-size:0.95rem;
+      color:#6f5b4e;
+    }
+
+    footer{
+      margin-top:40px;
+      background:#5e3d2c;
+      color:#fff6ed;
+      padding:28px 0;
+      text-align:center;
+    }
+
+    .small{
+      font-size:0.92rem;
+      opacity:0.95;
+    }
+
+    .fade-in{
+      opacity:0;
+      transform:translateY(18px);
+      transition:all 0.7s ease;
+    }
+
+    .fade-in.visible{
+      opacity:1;
+      transform:translateY(0);
     }
 
     @keyframes floatWolf {
@@ -248,453 +647,560 @@
       50%{ transform: translateY(-8px); }
     }
 
-    .wolf-head{
-      width: 130px;
-      height: 120px;
-      background: #8f8f95;
-      border-radius: 35% 35% 42% 42%;
-      margin: 0 auto;
-      position: relative;
-      top: 10px;
+    @keyframes pulseSun{
+      0%,100%{ transform:scale(1); }
+      50%{ transform:scale(1.05); }
     }
 
-    .ear{
-      position: absolute;
-      width: 38px;
-      height: 48px;
-      background: #76767c;
-      top: -18px;
-      border-radius: 40% 40% 10% 10%;
+    @keyframes floatCloud{
+      0%,100%{ transform:translateY(0px); }
+      50%{ transform:translateY(-6px); }
     }
 
-    .ear.left{ left: 12px; transform: rotate(-16deg); }
-    .ear.right{ right: 12px; transform: rotate(16deg); }
-
-    .eye{
-      position: absolute;
-      width: 14px;
-      height: 18px;
-      background: white;
-      border-radius: 50%;
-      top: 46px;
-    }
-
-    .eye::after{
-      content: "";
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      background: #222;
-      border-radius: 50%;
-      top: 6px;
-      left: 4px;
-    }
-
-    .eye.left{ left: 34px; }
-    .eye.right{ right: 34px; }
-
-    .nose{
-      position: absolute;
-      width: 18px;
-      height: 12px;
-      background: #222;
-      border-radius: 50%;
-      left: 50%;
-      transform: translateX(-50%);
-      top: 70px;
-    }
-
-    .mouth{
-      position: absolute;
-      width: 30px;
-      height: 16px;
-      border-bottom: 3px solid #333;
-      border-radius: 0 0 20px 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      top: 82px;
-    }
-
-    .blush{
-      position: absolute;
-      width: 18px;
-      height: 10px;
-      background: rgba(240,138,93,0.25);
-      border-radius: 50%;
-      top: 74px;
-    }
-
-    .blush.left{ left: 20px; }
-    .blush.right{ right: 20px; }
-
-    .wolf-body{
-      width: 110px;
-      height: 105px;
-      background: #9b9ba1;
-      border-radius: 35px;
-      margin: -8px auto 0;
-      position: relative;
-    }
-
-    .paw{
-      position: absolute;
-      width: 24px;
-      height: 34px;
-      background: #8b8b91;
-      bottom: -18px;
-      border-radius: 14px;
-    }
-
-    .paw.left{ left: 18px; }
-    .paw.right{ right: 18px; }
-
-    section{
-      padding: 40px 0;
-    }
-
-    .section-title{
-      font-size: 2rem;
-      margin-bottom: 12px;
-      color: #5e3d2c;
-    }
-
-    .section-subtitle{
-      color: #6e5a50;
-      margin-bottom: 25px;
-      max-width: 760px;
-    }
-
-    .grid{
-      display: grid;
-      gap: 22px;
-    }
-
-    .grid-3{
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .card{
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 22px;
-      box-shadow: var(--shadow);
-    }
-
-    .card h3{
-      margin-bottom: 10px;
-      color: #6d4332;
-    }
-
-    .feature-icon{
-      width: 52px;
-      height: 52px;
-      border-radius: 16px;
-      background: var(--bg-soft);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      margin-bottom: 15px;
-    }
-
-    .guide-box{
-      background: linear-gradient(135deg, #fff5e7, #fff);
-      border: 2px dashed #f0b27a;
-      border-radius: 20px;
-      padding: 18px;
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      box-shadow: var(--shadow);
-      margin-top: 10px;
-    }
-
-    .guide-avatar{
-      flex-shrink: 0;
-      width: 86px;
-      height: 86px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #ffe3bf, #fff1dd);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.3rem;
-    }
-
-    .guide-message{
-      font-size: 1rem;
-      color: #5c4b42;
-    }
-
-    .quick-links{
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-      margin-top: 24px;
-    }
-
-    .quick-link{
-      background: linear-gradient(135deg, #fff9f0, #fff);
-      border: 2px solid #f1dcc8;
-      border-radius: 20px;
-      padding: 18px;
-      box-shadow: var(--shadow);
-      transition: 0.25s ease;
-    }
-
-    .quick-link:hover{
-      transform: translateY(-4px);
-      border-color: #f0b27a;
-    }
-
-    .quick-link span{
-      display: inline-block;
-      margin-bottom: 10px;
-      font-size: 1.6rem;
-    }
-
-    footer{
-      margin-top: 40px;
-      background: #5e3d2c;
-      color: #fff6ed;
-      padding: 28px 0;
-      text-align: center;
-    }
-
-    .small{
-      font-size: 0.92rem;
-      opacity: 0.95;
-    }
-
-    .note{
-      margin-top: 12px;
-      font-size: 0.9rem;
-      color: #6f5b4e;
-    }
-
-    .fade-in{
-      opacity: 0;
-      transform: translateY(18px);
-      transition: all 0.7s ease;
-    }
-
-    .fade-in.visible{
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 1000px){
-      .quick-links{
-        grid-template-columns: repeat(2, 1fr);
+    @media (max-width:1000px){
+      .game-selector,
+      .grid-4{
+        grid-template-columns:repeat(2, 1fr);
       }
     }
 
-    @media (max-width: 900px){
+    @media (max-width:900px){
       .hero-content,
-      .grid-3{
-        grid-template-columns: 1fr;
+      .grid-3,
+      .grid-2{
+        grid-template-columns:1fr;
       }
 
       .hero{
-        padding-top: 35px;
+        padding-top:35px;
       }
 
       .hero-illustration{
-        min-height: 320px;
+        min-height:320px;
       }
 
       .nav{
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .nav-links{
-        gap: 10px;
+        flex-direction:column;
+        align-items:flex-start;
       }
     }
 
-    @media (max-width: 620px){
-      .quick-links{
-        grid-template-columns: 1fr;
+    @media (max-width:620px){
+      .game-selector,
+      .grid-4{
+        grid-template-columns:1fr;
       }
 
-      .guide-box{
-        flex-direction: column;
-        align-items: flex-start;
+      .question-box{
+        flex-direction:column;
+        align-items:flex-start;
       }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="container nav">
-      <div class="logo">🐺 Émotions & Moi - Le Loup</div>
-      <nav class="nav-links">
-        <a href="index.html" class="active">Accueil</a>
-        <a href="histoire.html">Histoire</a>
-        <a href="personnages.html">Personnages</a>
-        <a href="emotions.html">Émotions</a>
-        <a href="jeux.html">Mini-jeux</a>
-        <a href="progression.html">Progression</a>
-      </nav>
-    </div>
-  </header>
+<header>
+  <div class="container nav">
+    <div class="logo">🐺 Émotions & Moi - Le Loup</div>
+    <nav class="nav-links">
+      <a href="#accueil">Accueil</a>
+      <a href="#histoire">Histoire</a>
+      <a href="#personnages">Personnages</a>
+      <a href="#emotions">Émotions</a>
+      <a href="#jeux">Mini-jeux</a>
+      <a href="#progression">Progression</a>
+    </nav>
+  </div>
+</header>
 
-  <main>
-    <section class="hero">
-      <div class="container hero-content">
-        <div class="hero-text fade-in">
-          <h1>Bienvenue dans le monde du loup et des émotions</h1>
-          <p>
-            Ce projet transforme l’histoire du loup en parcours interactif pour enfants.
-            L’enfant découvre des situations, apprend à reconnaître les émotions,
-            choisit des réactions adaptées et développe peu à peu sa confiance en soi.
-          </p>
+<main>
+  <section class="hero" id="accueil">
+    <div class="container hero-content">
+      <div class="hero-text fade-in">
+        <h1>Un parcours interactif pour apprendre les émotions avec le loup</h1>
+        <p>
+          Cette version numérique transforme l’histoire du loup en expérience interactive.
+          L’enfant découvre les émotions, observe des situations, répond à des questions
+          et apprend peu à peu à mieux comprendre ce qu’il ressent.
+        </p>
 
-          <div class="badges">
-            <div class="badge">Projet jeunesse</div>
-            <div class="badge">Mini-jeux éducatifs</div>
-            <div class="badge">Émotions & confiance en soi</div>
-          </div>
-
-          <div class="buttons">
-            <a href="jeux.html" class="btn btn-primary">Commencer les jeux</a>
-            <a href="emotions.html" class="btn btn-secondary">Voir les émotions</a>
-          </div>
-
-          <p class="note">
-            Une adaptation pédagogique pensée pour les enfants, les parents et les enseignants.
-          </p>
+        <div class="badges">
+          <div class="badge">Projet jeunesse</div>
+          <div class="badge">Mini-jeux éducatifs</div>
+          <div class="badge">Confiance en soi</div>
         </div>
 
-        <div class="hero-card fade-in">
-          <div class="hero-illustration">
-            <div class="sun"></div>
-            <div class="cloud one"></div>
-            <div class="cloud two"></div>
-            <div class="forest"></div>
+        <div class="buttons">
+          <a href="#jeux" class="btn btn-primary">Commencer les jeux</a>
+          <a href="#emotions" class="btn btn-secondary">Voir les émotions</a>
+        </div>
+      </div>
 
-            <div class="wolf">
-              <div class="wolf-head">
-                <div class="ear left"></div>
-                <div class="ear right"></div>
-                <div class="eye left"></div>
-                <div class="eye right"></div>
-                <div class="nose"></div>
-                <div class="mouth"></div>
-                <div class="blush left"></div>
-                <div class="blush right"></div>
-              </div>
-              <div class="wolf-body">
-                <div class="paw left"></div>
-                <div class="paw right"></div>
-              </div>
+      <div class="hero-card fade-in">
+        <div class="hero-illustration">
+          <div class="sun"></div>
+          <div class="cloud one"></div>
+          <div class="cloud two"></div>
+          <div class="forest"></div>
+
+          <div class="wolf">
+            <div class="wolf-head">
+              <div class="ear left"></div>
+              <div class="ear right"></div>
+              <div class="eye left"></div>
+              <div class="eye right"></div>
+              <div class="nose"></div>
+              <div class="mouth"></div>
+              <div class="blush left"></div>
+              <div class="blush right"></div>
+            </div>
+            <div class="wolf-body">
+              <div class="paw left"></div>
+              <div class="paw right"></div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <h2 class="section-title fade-in">Le projet en quelques mots</h2>
-        <p class="section-subtitle fade-in">
-          Cette version numérique est construite comme un parcours simple, visuel et interactif.
-          L’enfant ne lit pas seulement l’histoire : il devient acteur de son apprentissage.
-        </p>
-
-        <div class="grid grid-3">
-          <div class="card fade-in">
-            <div class="feature-icon">📖</div>
-            <h3>Découvrir l’histoire</h3>
-            <p>
-              Le loup a peur de beaucoup de choses, mais il apprend peu à peu à mieux comprendre ce qu’il ressent.
-            </p>
-          </div>
-
-          <div class="card fade-in">
-            <div class="feature-icon">😊</div>
-            <h3>Comprendre les émotions</h3>
-            <p>
-              L’enfant apprend à reconnaître la joie, la tristesse, la peur et la colère dans des situations simples.
-            </p>
-          </div>
-
-          <div class="card fade-in">
-            <div class="feature-icon">🎮</div>
-            <h3>Jouer et progresser</h3>
-            <p>
-              Grâce aux mini-jeux, l’enfant choisit, répond, reçoit un retour immédiat et avance à son rythme.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <h2 class="section-title fade-in">Le loup te guide</h2>
-        <p class="section-subtitle fade-in">
-          Dans ce projet, le loup devient un personnage guide qui accompagne l’enfant dans chaque étape.
-        </p>
-
-        <div class="guide-box fade-in">
-          <div class="guide-avatar">🐺</div>
-          <div class="guide-message">
-            Bonjour ! Je suis le loup. Tu peux commencer par découvrir mon histoire,
-            rencontrer les personnages, apprendre les émotions, puis essayer les mini-jeux.
-          </div>
-        </div>
-
-        <div class="quick-links">
-          <a href="histoire.html" class="quick-link fade-in">
-            <span>📖</span>
-            <h3>Lire l’histoire</h3>
-            <p>Découvrir le parcours du loup et le message du projet.</p>
-          </a>
-
-          <a href="personnages.html" class="quick-link fade-in">
-            <span>🧒</span>
-            <h3>Voir les personnages</h3>
-            <p>Retrouver le loup et les autres personnages liés aux émotions.</p>
-          </a>
-
-          <a href="emotions.html" class="quick-link fade-in">
-            <span>🌈</span>
-            <h3>Découvrir les émotions</h3>
-            <p>Apprendre à mettre des mots sur ce que l’on ressent.</p>
-          </a>
-
-          <a href="jeux.html" class="quick-link fade-in">
-            <span>⭐</span>
-            <h3>Commencer les jeux</h3>
-            <p>Essayer les activités interactives prévues dans le projet.</p>
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      <p><strong>Projet universitaire - Cahier des charges hypermédia</strong></p>
-      <p class="small">
-        Adaptation web interactive autour du loup, des émotions et de la confiance en soi.
-      </p>
     </div>
-  </footer>
+  </section>
 
-  <script>
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.classList.add("visible");
+  <section id="histoire">
+    <div class="container">
+      <h2 class="section-title fade-in">L’histoire du loup</h2>
+      <p class="section-subtitle fade-in">
+        L’histoire sert de point de départ au projet. Le loup a peur de beaucoup de choses,
+        mais il apprend peu à peu à reconnaître ses émotions et à avancer avec plus de confiance.
+      </p>
+
+      <div class="grid grid-2">
+        <div class="card story-step fade-in" data-step="1">
+          <h3>Le loup a peur</h3>
+          <p>Les bruits, la nuit, les ombres et les situations inconnues lui semblent parfois très impressionnants.</p>
+        </div>
+
+        <div class="card story-step fade-in" data-step="2">
+          <h3>Tout paraît plus grand</h3>
+          <p>Son imagination transforme parfois de petites choses en grandes menaces.</p>
+        </div>
+
+        <div class="card story-step fade-in" data-step="3">
+          <h3>Il observe et apprend</h3>
+          <p>Petit à petit, il comprend mieux ce qu’il ressent et découvre que la peur est une émotion normale.</p>
+        </div>
+
+        <div class="card story-step fade-in" data-step="4">
+          <h3>Il prend confiance</h3>
+          <p>À force d’essayer, de respirer et de demander de l’aide, le loup devient plus rassuré.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="personnages">
+    <div class="container">
+      <h2 class="section-title fade-in">Les personnages</h2>
+      <p class="section-subtitle fade-in">
+        Chaque personnage aide l’enfant à reconnaître une émotion ou une réaction possible.
+      </p>
+
+      <div class="grid grid-4">
+        <div class="card fade-in">
+          <div class="feature-icon">🐺</div>
+          <h3>Le loup</h3>
+          <p>Il apprend à apprivoiser sa peur et à avancer avec courage.</p>
+        </div>
+
+        <div class="card fade-in">
+          <div class="feature-icon">😊</div>
+          <h3>L’enfant joyeux</h3>
+          <p>Il montre ce que l’on ressent quand on se sent heureux et rassuré.</p>
+        </div>
+
+        <div class="card fade-in">
+          <div class="feature-icon">😢</div>
+          <h3>L’enfant triste</h3>
+          <p>Il aide à comprendre la tristesse et l’importance d’en parler.</p>
+        </div>
+
+        <div class="card fade-in">
+          <div class="feature-icon">😠</div>
+          <h3>L’enfant en colère</h3>
+          <p>Il apprend qu’on peut ressentir de la colère sans faire de mal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="emotions">
+    <div class="container">
+      <h2 class="section-title fade-in">Comprendre les émotions</h2>
+      <p class="section-subtitle fade-in">
+        L’enfant découvre ici les émotions principales utilisées dans les activités.
+      </p>
+
+      <div class="grid grid-4">
+        <div class="card emotion fade-in">
+          <div class="emoji">😊</div>
+          <h3>Joie</h3>
+          <p>Quand on est content, léger et heureux.</p>
+          <div class="emotion-tag tag-yellow">Couleur : jaune</div>
+        </div>
+
+        <div class="card emotion fade-in">
+          <div class="emoji">😢</div>
+          <h3>Tristesse</h3>
+          <p>Quand on est déçu, qu’on a du chagrin ou qu’on se sent seul.</p>
+          <div class="emotion-tag tag-blue">Couleur : bleu</div>
+        </div>
+
+        <div class="card emotion fade-in">
+          <div class="emoji">😨</div>
+          <h3>Peur</h3>
+          <p>Quand quelque chose nous inquiète ou nous impressionne.</p>
+          <div class="emotion-tag tag-purple">Couleur : violet</div>
+        </div>
+
+        <div class="card emotion fade-in">
+          <div class="emoji">😠</div>
+          <h3>Colère</h3>
+          <p>Quand on est très énervé, frustré ou agacé.</p>
+          <div class="emotion-tag tag-red">Couleur : rouge</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="jeux">
+    <div class="container">
+      <h2 class="section-title fade-in">Les mini-jeux</h2>
+      <p class="section-subtitle fade-in">
+        Choisis une activité puis réponds aux questions. Chaque jeu contient plusieurs questions.
+      </p>
+
+      <div class="game-selector fade-in">
+        <button class="game-btn" data-game="recognition" onclick="startGame('recognition', this)">Jeu 1<br>Reconnaître</button>
+        <button class="game-btn" data-game="association" onclick="startGame('association', this)">Jeu 2<br>Associer</button>
+        <button class="game-btn" data-game="reaction" onclick="startGame('reaction', this)">Jeu 3<br>Réagir</button>
+        <button class="game-btn" data-game="confidence" onclick="startGame('confidence', this)">Jeu 4<br>Confiance</button>
+      </div>
+
+      <div class="game-panel fade-in">
+        <h3 id="gameTitle">Choisis un mini-jeu</h3>
+        <p class="game-desc" id="gameDesc">Clique sur l’un des jeux pour commencer.</p>
+
+        <div class="question-box">
+          <div class="scene-avatar" id="sceneAvatar">🐺</div>
+          <div class="question-text" id="questionText">Les questions apparaîtront ici.</div>
+        </div>
+
+        <div class="answers" id="answersContainer"></div>
+
+        <div class="result" id="resultText"></div>
+
+        <div class="controls">
+          <button class="btn btn-secondary" onclick="nextQuestion()">Question suivante</button>
+          <button class="btn btn-primary" onclick="resetCurrentGame()">Recommencer ce jeu</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="progression">
+    <div class="container">
+      <h2 class="section-title fade-in">Suivi de progression</h2>
+      <p class="section-subtitle fade-in">
+        Cette partie montre la progression de l’enfant dans les activités.
+      </p>
+
+      <div class="card progress-card fade-in">
+        <div class="progress-stats">
+          <div>⭐ Score : <span id="scoreValue">0</span></div>
+          <div>✅ Réponses justes : <span id="correctValue">0</span></div>
+          <div>🎯 Questions répondues : <span id="answeredValue">0</span></div>
+        </div>
+
+        <div class="progress-line">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <p class="progress-note">
+          Plus tu réponds aux questions, plus ta barre de progression avance.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p><strong>Projet universitaire - Cahier des charges hypermédia</strong></p>
+    <p class="small">Adaptation web interactive autour du loup, des émotions et de la confiance en soi.</p>
+  </div>
+</footer>
+
+<script>
+  const games = {
+    recognition: {
+      title: "Jeu 1 : Reconnaître l’émotion",
+      description: "Observe la situation et choisis l’émotion ressentie.",
+      questions: [
+        {
+          avatar: "🐺",
+          text: "Le loup entend un gros bruit dans la nuit. Quelle émotion ressent-il ?",
+          answers: [
+            { text: "Joie", correct: false, explanation: "Ce n’est pas ça." },
+            { text: "Peur", correct: true, explanation: "Bravo ! Le loup ressent de la peur." },
+            { text: "Colère", correct: false, explanation: "Pas tout à fait." }
+          ]
+        },
+        {
+          avatar: "😊",
+          text: "Un enfant reçoit une bonne surprise. Quelle émotion ressent-il ?",
+          answers: [
+            { text: "Tristesse", correct: false, explanation: "Non." },
+            { text: "Joie", correct: true, explanation: "Très bien ! Il ressent de la joie." },
+            { text: "Peur", correct: false, explanation: "Non, il n’y a pas de danger ici." }
+          ]
+        },
+        {
+          avatar: "😢",
+          text: "Une enfant perd son jouet préféré. Quelle émotion peut apparaître ?",
+          answers: [
+            { text: "Joie", correct: false, explanation: "Non." },
+            { text: "Tristesse", correct: true, explanation: "Oui, cela peut rendre triste." },
+            { text: "Surprise", correct: false, explanation: "Ce n’est pas la meilleure réponse." }
+          ]
         }
-      });
-    }, { threshold: 0.15 });
+      ]
+    },
 
-    document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
-  </script>
+    association: {
+      title: "Jeu 2 : Associer situation / émotion",
+      description: "Trouve l’émotion qui correspond le mieux à la scène.",
+      questions: [
+        {
+          avatar: "😳",
+          text: "Lina doit parler devant toute la classe. Quelle émotion ressent-elle probablement ?",
+          answers: [
+            { text: "Peur", correct: true, explanation: "Oui, cela peut faire peur." },
+            { text: "Joie", correct: false, explanation: "Pas ici." },
+            { text: "Calme", correct: false, explanation: "Pas vraiment." }
+          ]
+        },
+        {
+          avatar: "😠",
+          text: "Yanis n’arrive pas à finir sa construction. Quelle émotion peut apparaître ?",
+          answers: [
+            { text: "Colère", correct: true, explanation: "Oui ! La frustration peut provoquer de la colère." },
+            { text: "Joie", correct: false, explanation: "Non." },
+            { text: "Sommeil", correct: false, explanation: "Non." }
+          ]
+        },
+        {
+          avatar: "😊",
+          text: "Sami joue avec ses amis dans le jardin. Quelle émotion correspond ?",
+          answers: [
+            { text: "Peur", correct: false, explanation: "Non." },
+            { text: "Tristesse", correct: false, explanation: "Non." },
+            { text: "Joie", correct: true, explanation: "Bravo ! C’est la joie." }
+          ]
+        }
+      ]
+    },
+
+    reaction: {
+      title: "Jeu 3 : Choisir une réaction",
+      description: "Trouve la réaction la plus adaptée face à une émotion difficile.",
+      questions: [
+        {
+          avatar: "🐺",
+          text: "Le loup a peur du noir. Que peut-il faire pour s’aider ?",
+          answers: [
+            { text: "Respirer doucement et allumer une petite lumière", correct: true, explanation: "Très bien ! C’est une bonne réaction." },
+            { text: "Crier très fort", correct: false, explanation: "Cette réaction n’aide pas à se calmer." },
+            { text: "Se cacher sans rien dire", correct: false, explanation: "Mieux vaut chercher une solution." }
+          ]
+        },
+        {
+          avatar: "😢",
+          text: "Emma est triste. Quelle réaction est la plus adaptée ?",
+          answers: [
+            { text: "Parler à un adulte ou à un ami", correct: true, explanation: "Oui ! Parler peut aider." },
+            { text: "Tout garder pour elle", correct: false, explanation: "Ce n’est pas la meilleure solution." },
+            { text: "Se moquer des autres", correct: false, explanation: "Non." }
+          ]
+        },
+        {
+          avatar: "😠",
+          text: "Un enfant est en colère. Que peut-il faire ?",
+          answers: [
+            { text: "Pousser quelqu’un", correct: false, explanation: "Non, ce n’est pas adapté." },
+            { text: "Prendre une pause et respirer", correct: true, explanation: "Bravo ! Cela aide à retrouver son calme." },
+            { text: "Casser un objet", correct: false, explanation: "Non." }
+          ]
+        }
+      ]
+    },
+
+    confidence: {
+      title: "Jeu 4 : Confiance en soi",
+      description: "Choisis la pensée ou l’action qui aide à prendre confiance.",
+      questions: [
+        {
+          avatar: "😳",
+          text: "Lina pense : “Je n’y arriverai jamais.” Quelle pensée peut l’aider davantage ?",
+          answers: [
+            { text: "Je peux essayer petit à petit", correct: true, explanation: "Oui ! Cette pensée aide à prendre confiance." },
+            { text: "Je suis nulle", correct: false, explanation: "Cette phrase fait perdre confiance." },
+            { text: "J’abandonne", correct: false, explanation: "Non." }
+          ]
+        },
+        {
+          avatar: "🐺",
+          text: "Le loup hésite avant d’entrer dans un endroit nouveau. Quelle action l’aide ?",
+          answers: [
+            { text: "Avancer doucement et observer", correct: true, explanation: "Très bien ! Aller doucement aide à se rassurer." },
+            { text: "Dire qu’il ne peut jamais rien faire", correct: false, explanation: "Cette pensée bloque la confiance." },
+            { text: "Fuir tout de suite", correct: false, explanation: "Pas la meilleure solution." }
+          ]
+        },
+        {
+          avatar: "😊",
+          text: "Après avoir réussi une petite étape, que peut faire l’enfant ?",
+          answers: [
+            { text: "Se féliciter", correct: true, explanation: "Bravo ! Cela renforce la confiance en soi." },
+            { text: "Dire que ça ne compte pas", correct: false, explanation: "Chaque petite réussite compte." },
+            { text: "Penser seulement à ce qui a raté", correct: false, explanation: "Il faut aussi voir ce qui est réussi." }
+          ]
+        }
+      ]
+    }
+  };
+
+  let currentGameKey = null;
+  let currentQuestionIndex = 0;
+  let totalAnswered = 0;
+  let totalCorrect = 0;
+  let score = 0;
+  let questionLocked = false;
+  let answeredTracker = {};
+
+  function updateProgress() {
+    document.getElementById("scoreValue").textContent = score;
+    document.getElementById("correctValue").textContent = totalCorrect;
+    document.getElementById("answeredValue").textContent = totalAnswered;
+
+    const totalPossibleQuestions = 12;
+    const percent = Math.min((totalAnswered / totalPossibleQuestions) * 100, 100);
+    document.getElementById("progressFill").style.width = percent + "%";
+  }
+
+  function setActiveGameButton(button) {
+    document.querySelectorAll(".game-btn").forEach(btn => btn.classList.remove("active"));
+    if (button) button.classList.add("active");
+  }
+
+  function startGame(gameKey, button = null) {
+    currentGameKey = gameKey;
+    currentQuestionIndex = 0;
+    setActiveGameButton(button);
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    if (!currentGameKey) return;
+
+    const game = games[currentGameKey];
+    const question = game.questions[currentQuestionIndex];
+
+    document.getElementById("gameTitle").textContent = game.title;
+    document.getElementById("gameDesc").textContent = game.description;
+    document.getElementById("sceneAvatar").textContent = question.avatar;
+    document.getElementById("questionText").textContent = question.text;
+
+    const container = document.getElementById("answersContainer");
+    container.innerHTML = "";
+    document.getElementById("resultText").textContent = "";
+    document.getElementById("resultText").className = "result";
+    questionLocked = false;
+
+    question.answers.forEach((answer, index) => {
+      const btn = document.createElement("button");
+      btn.className = "answer-btn";
+      btn.textContent = answer.text;
+      btn.onclick = () => handleAnswer(index);
+      container.appendChild(btn);
+    });
+  }
+
+  function handleAnswer(selectedIndex) {
+    if (questionLocked || !currentGameKey) return;
+
+    const game = games[currentGameKey];
+    const question = game.questions[currentQuestionIndex];
+    const answers = question.answers;
+    const buttons = document.querySelectorAll(".answer-btn");
+    const result = document.getElementById("resultText");
+    const trackerKey = currentGameKey + "-" + currentQuestionIndex;
+
+    questionLocked = true;
+
+    buttons.forEach((btn, index) => {
+      btn.disabled = true;
+      if (answers[index].correct) btn.classList.add("correct");
+      if (index === selectedIndex && !answers[index].correct) btn.classList.add("wrong");
+    });
+
+    if (!answeredTracker[trackerKey]) {
+      totalAnswered++;
+      answeredTracker[trackerKey] = true;
+    }
+
+    if (answers[selectedIndex].correct) {
+      totalCorrect++;
+      score++;
+      result.textContent = "✅ " + answers[selectedIndex].explanation;
+      result.className = "result success";
+    } else {
+      result.textContent = "❌ " + answers[selectedIndex].explanation;
+      result.className = "result error";
+    }
+
+    updateProgress();
+  }
+
+  function nextQuestion() {
+    if (!currentGameKey) return;
+
+    const game = games[currentGameKey];
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex >= game.questions.length) {
+      currentQuestionIndex = 0;
+    }
+
+    renderQuestion();
+  }
+
+  function resetCurrentGame() {
+    if (!currentGameKey) return;
+    currentQuestionIndex = 0;
+    renderQuestion();
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add("visible");
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
+
+  updateProgress();
+</script>
+
 </body>
 </html>
